@@ -21,23 +21,27 @@ public class JogoForca {
     }
     
     public String pegarDica(){
+       
        String []dica = gabarito.split("");
        String palavra = dicionario[posicaoSorteada];
        String pose = "?";
        String pFinal = "";
        int cont=0;
        
-       for(int i = 0;i<=dica.length;i++){
-           cont += pose == dica[i]?1:0;
+       for(int i = 0;i<dica.length;i++){
+           
+           if(dica[i].equals(pose))
+               cont++;
+           
            
        }
        int [] duvidas = new int[cont];
-       for(int i = 0;i<=dica.length;i++){
+       for(int i = 0;i<cont;i++){
            duvidas[i] = pose == dica[i]?i:-1;
            
        }
-       int p1 = duvidas[1];
-       int p2 = duvidas[1];
+       int p1 = duvidas[0];
+       int p2 = duvidas[0];
        if(cont > 2){
             for(int i = 0;p1==duvidas[i] ;i++){
                 p1 = (int)(Math.random()*gabarito.length());
@@ -52,14 +56,13 @@ public class JogoForca {
                 p1 = (int)(Math.random()*gabarito.length());
             }
             dica[p1] = ""+palavra.charAt(p1);
-        }else{
-            return "Só resta uma letra";
         }
-       for(int i=0;i<=palavra.length();i++){
+       for(int i=0;i<palavra.length();i++){
            pFinal+=dica[i];
        }
        gabarito = pFinal;
-       return pFinal;
+       return cont < 2 ? "SÓ RESTA 1 LETRA":pFinal;
+       
     }
     public void sortear(){
         posicaoSorteada = (int)(Math.random()*dicionario.length);
@@ -109,6 +112,7 @@ public class JogoForca {
         }else{
             dicionario[posicaoSorteada] = null;
             posicaoSorteada = -1;
+            gabarito = "";
             return true;
         }
     }
