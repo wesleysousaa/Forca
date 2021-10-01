@@ -1,33 +1,50 @@
 
 package jogo.da.forca;
 
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class JogoDaForca {
     public static void main(String[] args) {
+        Path localP = Paths.get("palavras.txt");
+        Path LocalD = Paths.get("dicas.txt");
+        String [] listaD = null;
+        String [] listaP = null;
+        try{
+            byte[] dadosP = Files.readAllBytes(localP);
+            byte[] dadosD = Files.readAllBytes(LocalD);
+            String tudoP = new String(dadosP).toUpperCase();
+            String tudoD = new String(dadosD).toUpperCase();
+            listaP = tudoP.split(",");
+            listaD = tudoD.split(",");
+            
+                
+            
+        }catch(Exception erro){
+            System.out.println("erro ao encontrar o diretório");
+        }
+        
+        
         JogoForca novoJogo = new JogoForca();
         Palavra palavra = new Palavra();
         Scanner leitor = new Scanner(System.in);
-        String []dicas = new String[5];
-        String []dicionario = new String[5];
+        String []dicas = listaD;
+        String []dicionario = listaP;
+        
+        
+        
         int vidas = 3;
         int numPalavras = 0;
-        System.out.println("Digite 5 palavras");
-        int h = 0;
+        
+        
         int k = 0;
-        for(int i = 0;i<5;i++){
-            h++;
-            System.out.println("Digite a "+h+"º palavra");
-            palavra.setPalavra(leitor.nextLine().toUpperCase());
-            dicionario[i] = palavra.getPalavra().toUpperCase();
-            System.out.println("Digite a dica dessa palavra: ");
-            palavra.setDica(leitor.nextLine().toUpperCase());
-            dicas[i] = palavra.getDica().toUpperCase();
-            
-        }
+        
         novoJogo.setDicionario(dicionario);
         
-        for(int i = 0;i<5 && vidas > 0;i++){
+        for(int i = 0;i<novoJogo.getDicionario().length && vidas > 0;i++){
             k++;
             vidas = 3;
             novoJogo.sortear();
@@ -43,8 +60,8 @@ public class JogoDaForca {
                 System.out.println("PALAVRA: "+novoJogo.getGabarito());
                 
                 if(dica == 1){
-                    System.out.println("GOSTARIA DE PEDIR UMA DICA? VOCÊ SÓ TEM CHANCE A 1 DICA POR PALAVRA\nDIGITE 1 PARA SIM\nDIGITE 2 PARA NÃO");
                     System.out.println("CASO HAJA APENAS 1 LETRA FALTANDO, VOCÊ NÃO OBTERÁ UMA NOVA DICA");
+                    System.out.println("GOSTARIA DE PEDIR UMA DICA? VOCÊ SÓ TEM CHANCE A 1 DICA POR PALAVRA\nDIGITE 1 PARA SIM\nDIGITE 2 PARA NÃO");
                     resposta = Integer.parseInt(leitor.next());
                     
                 }
