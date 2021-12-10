@@ -1,2 +1,2 @@
 # Forca
- Joguinho de forca que sua base foi orientação a objetos em Java
+ Joguinho de forca orientado a objetos em Java
